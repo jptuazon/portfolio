@@ -1,0 +1,2446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justin Tuazon | Data Scientist</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="./imgs/jpstuazon_prof_pic.jpeg">
+
+    <style>
+        :root {
+            --bg-dark: #070b19;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --accent-cyan: #00f2fe;
+            --accent-blue: #3b82f6;
+            --accent-glow: #60a5fa;
+            --accent-indigo: #6366f1;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border-glow: rgba(56, 189, 248, 0.2);
+            --border-glow-active: rgba(56, 189, 248, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Scroll Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-indigo));
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+            background: rgba(7, 11, 25, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.25rem 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-cyan);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent-cyan);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        /* Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: 6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-header {
+            margin-bottom: 3.5rem;
+            text-align: left;
+        }
+
+        .section-tag {
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Home Section */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 6rem;
+            position: relative;
+            gap: 2rem;
+        }
+
+        .home-main-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            width: 100%;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 700px;
+        }
+
+        /* Profile Image */
+        .hero-image-wrapper {
+            flex: 0 0 300px;
+            position: relative;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 10px 40px -10px rgba(0, 242, 254, 0.3);
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent-blue);
+            border-radius: 16px;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            animation: pulse-animation 2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 242, 254, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); }
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-main);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.15);
+        }
+
+        /* Carousel Navigation Buttons (Global) */
+        .carousel-nav-btn {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .carousel-nav-btn:hover:not(:disabled) {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
+            background: var(--bg-card-hover);
+        }
+        
+        .carousel-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: transparent;
+        }
+
+        /* Highlights Carousel Section */
+        .highlights-row {
+            width: 100%;
+        }
+
+        .highlights-section {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--accent-cyan);
+            position: relative;
+            width: 100%;
+        }
+        
+        .highlights-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .highlights-title {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+        }
+        
+        .highlights-title i {
+            color: var(--accent-cyan);
+        }
+
+        .hl-nav-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .hl-viewport {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
+            scroll-snap-type: x mandatory;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .hl-viewport::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .hl-track {
+            display: flex;
+        }
+
+        .highlight-card {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            box-sizing: border-box;
+            padding-right: 1.5rem; 
+            height: auto; 
+        }
+
+        .highlight-card img {
+            width: 300px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .highlight-info {
+            flex: 1;
+            min-width: 0; 
+        }
+
+        .highlight-info h4 {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .highlight-info p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.6;
+            word-wrap: break-word;
+            white-space: normal; 
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        .bio-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-blue));
+        }
+
+        .bio-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .bio-card p strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* History Columns & Pagination */
+        .history-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .column-header i {
+            color: var(--accent-cyan);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            min-height: 200px;
+        }
+
+        .history-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .history-card:hover {
+            border-color: var(--border-glow-active);
+            transform: translateX(4px);
+            background: var(--bg-card-hover);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-role {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.08);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .card-sub {
+            font-size: 0.9rem;
+            color: var(--accent-glow);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .card-desc ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 0.5rem;
+        }
+
+        .card-desc ul li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-desc ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .page-indicator {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        /* Research & Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.75rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.35s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-glow-active);
+            box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.25);
+            background: var(--bg-card-hover);
+        }
+
+        .project-top {
+            margin-bottom: 1.25rem;
+        }
+
+        .project-header-icon {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-icon {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.1);
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-links a {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-left: 0.75rem;
+            transition: color 0.2s ease;
+        }
+
+        .project-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .project-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-impact {
+            background: rgba(59, 130, 246, 0.08);
+            border-left: 3px solid var(--accent-blue);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Awards Timeline Section */
+        .awards-scroll-container {
+            max-height: 800px;
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .awards-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .awards-scroll-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .awards-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 120px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-indigo), rgba(255, 255, 255, 0.05));
+        }
+
+        .timeline-year-group {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-year-node {
+            position: absolute;
+            left: 70px;
+            top: 0;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 25px;
+        }
+
+        .year-label {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            background: var(--bg-dark);
+            padding: 0.2rem 0.5rem;
+        }
+
+        .timeline-node-dot {
+            position: absolute;
+            left: 114px;
+            top: 8px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 3px solid var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+            z-index: 2;
+        }
+
+        .timeline-content-list {
+            margin-left: 160px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .award-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .award-card:hover {
+            border-color: var(--border-glow);
+            transform: translateX(6px);
+            background: var(--bg-card-hover);
+            box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .award-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.4rem;
+        }
+
+        .award-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .award-title i {
+            color: #f59e0b;
+        }
+
+        .award-issuer {
+            font-size: 0.85rem;
+            color: var(--accent-glow);
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+        }
+
+        .award-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Simplified Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .skill-group {
+            background: transparent;
+        }
+
+        .skill-group-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.75rem;
+        }
+
+        .skill-group-title i {
+            color: var(--accent-cyan);
+            font-size: 1.25rem;
+        }
+
+        .skills-items-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+        }
+
+        .skill-pill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 0.65rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skill-pill-card:hover {
+            border-color: var(--accent-cyan);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.15);
+            color: var(--accent-cyan);
+        }
+
+        /* Engagements Carousel Section */
+        .engagements-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+        }
+
+        .eng-nav-group {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .eng-viewport {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-snap-type: x mandatory;
+            width: 100%;
+            border-radius: 16px;
+        }
+        
+        .eng-viewport::-webkit-scrollbar {
+            display: none;
+        }
+
+        .eng-track {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .eng-card {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            box-sizing: border-box;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            min-height: 350px;
+        }
+
+        .eng-media {
+            flex: 0 0 45%;
+            max-width: 45%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .eng-media img, .eng-media video {
+            width: 100%;
+            max-height: 400px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            object-fit: cover;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .eng-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0; 
+            width: 100%;
+        }
+
+        .eng-info h3 {
+            font-size: 1.6rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        .eng-meta {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.25rem;
+        }
+
+        .eng-info p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        /* Contact & Footer Section */
+        .contact-box {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.7));
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 3.5rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+        }
+
+        .contact-box h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .contact-box p {
+            color: var(--text-muted);
+            max-width: 550px;
+            margin: 0 auto 2rem auto;
+            font-size: 1rem;
+        }
+
+        .explicit-email {
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            color: var(--accent-cyan);
+            margin-bottom: 2rem;
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.08);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .contact-socials {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            border-color: transparent;
+        }
+
+        footer {
+            padding: 2.5rem 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .home-main-row {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 2rem;
+            }
+            .hero-image-wrapper {
+                flex: 0 0 auto;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .highlights-title {
+                justify-content: center;
+            }
+            .history-columns {
+                grid-template-columns: 1fr;
+            }
+            .timeline::before {
+                left: 20px;
+            }
+            .timeline-year-node {
+                position: relative;
+                left: 0;
+                top: 0;
+                justify-content: flex-start;
+                margin-bottom: 0.5rem;
+            }
+            .timeline-node-dot {
+                left: 14px;
+            }
+            .timeline-content-list {
+                margin-left: 45px;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .eng-card {
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1.5rem;
+                text-align: center;
+                height: auto;
+            } 
+            .eng-media {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+            .eng-info {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(7, 11, 25, 0.98);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1.25rem;
+                border-bottom: 1px solid var(--glass-border);
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .card-meta {
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+            .highlight-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .highlight-card img {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- Background Canvas for Particles -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fa-solid font-mono fa-code"></i>
+                &nbsp;
+                <span>J.P. Tuazon</span>
+            </a>
+            <div class="menu-btn" id="menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="nav-item">Home</a></li>
+                <li><a href="#about" class="nav-item">About</a></li>
+                <li><a href="#research" class="nav-item">Research</a></li>
+                <li><a href="#skills" class="nav-item">Skills</a></li>
+                <li><a href="#awards" class="nav-item">Awards</a></li>
+                <li><a href="#engagements" class="nav-item">Engagements</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home">
+            <div class="home-main-row">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="pulse"></span>&nbsp;Open to Machine Learning & Statistics Research and Consulting Projects
+                    </div>
+                    <h1 class="hero-title">
+                        Exploring <span class="gradient-text">rigorous</span> methods in statistics and machine learning.
+                    </h1>
+                    <p class="hero-subtitle">
+                        Hi, I'm <strong>Justin Philip Tuazon</strong>! You can call me Justin. I'm a data science professional and researcher experienced in leveraging mathematical and computational methods to solve problems, with proficiency in developing and applying quantitative methods, programming, and automation.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#research" class="btn btn-primary">
+                            <i class="fa-solid fa-flask"></i> Explore Research
+                        </a>
+                        <a href="#about" class="btn btn-secondary">
+                            <i class="fa-regular fa-user"></i> Academic & Industry Bio
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-image-wrapper">
+                    <img src="./imgs/jpstuazon_prof_pic.jpeg" alt="Justin Tuazon Profile Picture">
+                </div>
+            </div>
+
+            <div class="highlights-row">
+                <div class="highlights-section">
+                    <div class="highlights-header">
+                        <h3 class="highlights-title"><i class="fa-solid fa-star"></i> Recent Highlights</h3>
+                        <div class="hl-nav-group">
+                            <button class="carousel-nav-btn hl-prev" aria-label="Previous Highlight">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <span class="page-indicator hl-indicator">1 / 2</span>
+                            <button class="carousel-nav-btn hl-next" aria-label="Next Highlight">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hl-viewport">
+                        <div class="hl-track">
+                            <div class="highlight-card">
+                                <img src="./imgs/imps_highlight.jpeg" alt="IMPS Presentation">
+                                <div class="highlight-info">
+                                    <h4>Presentation at the 2026 International Meeting of the Psychometric Society</h4>
+                                    <p>
+                                    I recently presented our research, Pairwise Target Rotation for Factor Models, in an oral session at the 2026 International Meeting of the Psychometric Society (IMPS) held at Yonsei University in Seoul, South Korea back in July 2026. This work focuses on developing an intuitive yet flexible method for incorporating a priori information, such as item semantics, into factor rotations. The approach can be used to produce interpretable factor solutions and effectively characterize latent variables.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="highlight-card">
+                                <img src="./imgs/longi_highlight.png" alt="AERA Presentation">
+                                <div class="highlight-info">
+                                    <h4>Poster at the 2026 American Educational Research Association Annual Meeting</h4>
+                                    <p>
+                                    Our work, Design and Implementation of Reduced Longitudinal Experiments, was selected from over 13,000 submissions for poster presentation at the 2026 American Educational Research Association (AERA) Annual Meeting. It focuses on characterizing hierarchical linear models to produce practical recommendations for designing and implementing longitudinal experiments. My co-author, Le Dolino, presented our paper at the conference back in April 2026 in Los Angeles, California.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-header">
+                <span class="section-tag">// 01. Profile & History</span>
+                <h2 class="section-title">About Me</h2>
+            </div>
+
+            <div class="about-grid">
+                <div class="bio-card">
+                    <p>
+                        I am an early-career <strong>Data Scientist and Researcher</strong> passionate about <strong>statistics and machine learning</strong>. My work centers on developing novel quantitative methods, as well as intelligent systems, and creatively applying such, ultimately combining rigorous modeling with clever approaches to uncover complex patterns in data. Currently, my research and professional practice focus on <strong>latent variable models</strong>, <strong>mixed-effects models</strong>, and <strong>causal machine learning</strong>.
+                    </p>
+                    <p>
+                        I am currently pursuing an <strong>M.S. in Computer Science</strong> at the University of the Philippines Diliman (UPD), where I am affiliated with the Computer Vision and Machine Intelligence Group of the Department of Computer Science. I previously earned my <strong>B.S. in Statistics</strong> degree from UPD, graduating <strong>summa cum laude</strong> back in 2023.
+                    </p>
+                    <p>
+                        Outside of academics and work, I enjoy playing video games and playing the guitar. 🙂
+                    </p>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                        <a href="./pdfs/cv.pdf" target="_blank" class="btn btn-primary">
+                            <i class="fa-solid fa-file-import"></i> Download CV
+                        </a>
+                    </div>
+                    
+                </div>
+
+                <div class="history-columns">
+                    <!-- Education History Pagination -->
+                    <div class="history-column">
+                        <div class="column-header">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>Educational History</span>
+                        </div>
+
+                        <div class="pagination-wrapper">
+                            <div class="history-list">
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">M.S. in Computer Science</span>
+                                        <span class="card-date">Aug 2024 — Present</span>
+                                    </div>
+                                    <div class="card-sub">University of the Philippines Diliman</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Affiliated with the Computer Vision and Machine Intelligence Group</li>
+                                            <li>Won the 1st Place Best Graduate Student Paper Award at the 25th Student-Faculty Conference on Statistical Sciences</li>
+                                            <li>Co-authored a research paper on factor analysis and presented it in an oral session at the 2026 International Meeting of the Psychometric Society (IMPS) following peer-reviewed acceptance</li>
+                                            <li>Co-authored a research paper on longitudinal experiments that was selected from over 13,000 submissions for poster presentation at the 2026 American Educational Research Association (AERA) Annual Meeting following peer-reviewed acceptance</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">B.S. in Statistics</span>
+                                        <span class="card-date">Aug 2019 — Jul 2023</span>
+                                    </div>
+                                    <div class="card-sub">University of the Philippines Diliman</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Graduated summa cum laude</li>
+                                            <li>Represented the university at the 25th Philippine Statistics Quiz, and won as NCR Regional Champion and National Finalist</li>
+                                            <li>DOST Merit Scholar</li>
+                                            <li>Consistent University Scholar</li>
+                                            <li>Pi Gamma Mu Honor Society Nominee</li>
+                                            <li>Phi Kappa Phi Honor Society Nominee</li>
+                                            <li>Vice President for Academic Affairs at UP Investment Club (A.Y. 2022 — 2023)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">High School Diploma</span>
+                                        <span class="card-date">Jul 2013 — May 2019</span>
+                                    </div>
+                                    <div class="card-sub">Philippine Science High School — SMC</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Graduated with high honors</li>
+                                            <li>
+                                                Represented the school and won in various Mathematics, Statistics, and Economics competitions
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pagination Controls -->
+                            <div class="pagination-controls">
+                                <button class="carousel-nav-btn page-btn prev-btn" aria-label="Previous Page">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <span class="page-indicator">1 / 1</span>
+                                <button class="carousel-nav-btn page-btn next-btn" aria-label="Next Page">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional History Pagination -->
+                    <div class="history-column">
+                        <div class="column-header">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span>Professional History</span>
+                        </div>
+
+                        <div class="pagination-wrapper">
+                            <div class="history-list">
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Data Scientist</span>
+                                        <span class="card-date">Nov 2025 — Present</span>
+                                    </div>
+                                    <div class="card-sub">UnionBank of the Philippines</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>
+                                                Part of the Data Science and AI Solutions team
+                                            </li>
+                                            <li>
+                                                Develops and implements machine learning models and AI solutions (e.g., recommender engines, causal models) to solve business challenges, drive revenue and profit growth, and improve operational efficiency
+                                            </li>
+                                            <li>
+                                                Leverages Python, SQL, AWS SageMaker, and Snowflake for model building and evaluation
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Data and Transformation Engineer</span>
+                                        <span class="card-date">Aug 2025 — Nov 2025</span>
+                                    </div>
+                                    <div class="card-sub">Citi</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Infrastructure Intermediate Technology Analyst</li>
+                                            <li>Developed an interactive dashboard (using PHP, SQL, and JS) that provided real-time figures and trends on service delivery quality</li>
+                                            <li>
+                                                Created scorecards on performance and productivity, covering 10+ sources and metrics, using Power Query and Power Pivot
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Ops & Tech Management Analyst</span>
+                                        <span class="card-date">Jul 2023 — Jul 2025</span>
+                                    </div>
+                                    <div class="card-sub">Citi</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>
+                                                Completed the bank’s global 2-year Management Development Program, an exclusive accelerated track for high-potential talent to build leadership skills and cross-functional expertise
+                                            </li>
+                                            <li>
+                                                Built data systems and tools using PHP, SQL, JavaScript, VBA, HTML, and CSS
+                                            </li>
+                                            <li>
+                                                Developed a QA platform with analytics, role-based authentication, data validation, notifications, and admin tools, automating workflows and delivering real-time insights from 2,000+ audits monthly
+                                            </li>
+                                            <li>
+                                                Launched a site for streamlined communication and knowledge sharing, driving 38,000 visits from 200+ users in 2.5 months
+                                            </li>
+                                            <li>
+                                                Created Tableau and Power BI dashboards analyzing 100,000s of data points across key performance metrics
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Statistics Consultant</span>
+                                        <span class="card-date">Jan 2023 — Aug 2024</span>
+                                    </div>
+                                    <div class="card-sub">Altabay Solutions</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Performed statistical analyses (e.g., mixed-effects models, generalized linear models, and exploratory analyses) for academic studies across various disciplines (e.g., health sciences, social sciences, and architecture).</li>
+                                            <li>Collaborated with clients to assess statistical needs and explain complex concepts.</li>
+                                            <li>Advised on research design, data collection, and analysis methods to improve study rigor.</li>
+                                            <li>Facilitated workshops on research and statistical analysis for teachers and students.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Data Scientist</span>
+                                        <span class="card-date">Aug 2022 — Jun 2023</span>
+                                    </div>
+                                    <div class="card-sub">InvestEd Philippines</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Data Freelancer</li>
+                                            <li>Built analytical models (e.g., credit risk), and supported performance evaluation and model deployment.</li>
+                                            <li>Conducted statistical analyses (e.g., unsupervised and supervised learning, statistical modeling, and hypothesis testing) to address operational gaps, and improve products and processes.</li>
+                                            <li>Developed data tools and dashboards with SQL, Databox, Excel, Google Sheets, Data Studio, JavaScript, HTML, CSS, and VBA.</li>
+                                            <li>Delivered insights through clear reports and presentations to both technical and non-technical stakeholders.</li>
+                                            <li>Provided analytical support for operational projects (e.g., KPI design and survey development).</li>
+                                            <li>Utilized R, Python, and SQL for advanced analysis and model development.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Ops & Tech Summer Analyst</span>
+                                        <span class="card-date">Jun 2022 — Aug 2022</span>
+                                    </div>
+                                    <div class="card-sub">Citi</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Worked on workforce analytics and automated reporting, with various data sources and options, using VBA and Power Query</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Data Science Program Instructor</span>
+                                        <span class="card-date">May 2022 — Jun 2022</span>
+                                    </div>
+                                    <div class="card-sub">Philippine Science High School Science Immersion Program</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Co-developed the syllabus, and wrote materials and exercises about several Python packages, web scraping, and basic statistics</li>
+                                            <li>
+                                                Served as one of the panelists during the interns’ capstone project presentations
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="history-card">
+                                    <div class="card-meta">
+                                        <span class="card-role">Data Science Intern</span>
+                                        <span class="card-date">Jan 2022 — Mar 2022</span>
+                                    </div>
+                                    <div class="card-sub">Bank of the Philippine Islands</div>
+                                    <div class="card-desc">
+                                        <ul>
+                                            <li>Worked in teams to formulate data-driven solutions to fields such as consumer profiling, market research, and credit risk analysis</li>
+                                            <li>
+                                                Created a comprehensive web-based dashboard with built-in machine learning implementation (text clustering) to automate data transformation, calculations, and visualizations for consumer behavior insights using Python
+                                            </li>
+                                            <li>
+                                                Was given special recognition for outstanding performance
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            
+                            <!-- Pagination Controls -->
+                            <div class="pagination-controls">
+                                <button class="carousel-nav-btn page-btn prev-btn" aria-label="Previous Page">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <span class="page-indicator">1 / 1</span>
+                                <button class="carousel-nav-btn page-btn next-btn" aria-label="Next Page">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Research & Projects Section -->
+        <section id="research">
+            <div class="section-header">
+                <span class="section-tag">// 02. Selected Works</span>
+                <h2 class="section-title">Research & Projects</h2>
+                <span style="color: var(--text-muted);">Click on the icon(s) at the top right of each card for more details.</span>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-top">
+                        <div class="project-header-icon">
+                            <div class="project-icon"><i class="fa-solid fa-square-root-variable"></i></div>
+                            <div class="project-links">
+                                <a href="https://arxiv.org/abs/2409.11525" target="_blank" title="View Paper"><i class="fa-solid fa-file-pdf"></i></a>
+                                <a href="https://github.com/interpretablefa/interpretablefa" target="_blank" title="Code Repository"><i class="fa-solid fa-code"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Pairwise Target Rotation for Factor Models</h3>
+                        <p class="project-desc">
+                            We developed a new factor rotation method  (an unsupervised learning technique) and its Python implementation, that can incorporate arbitrary prior information (e.g., semantics) for exploration and model building.
+                        </p>
+                        <p class="project-desc">
+                            Presented at the 2026 International Meeting of the Psychometric Society (IMPS) in an oral session.
+                            <br>
+                            <br>
+                            Won 1st Place Best Graduate Student Paper Award at 25th Student-Faculty Conference on Statistical Sciences.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-impact">
+                            <strong>Impact:</strong> New method (unsupervised learning) that can be used to effectively uncover  latent structures. 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-top">
+                        <div class="project-header-icon">
+                            <div class="project-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <div class="project-links">
+                                <a href="https://www.researchsquare.com/article/rs-7262280/v1" target="_blank" title="View Paper"><i class="fa-solid fa-file-pdf"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Design and Implementation of Reduced Longitudinal Experiments</h3>
+                        <p class="project-desc">
+                            We characterized hierarchical linear models through the design and analysis of a Monte Carlo experiment (including the simulation of nested data, attrition, and more), implemented in R, to produce recommendations for longitudinal experiments.
+                        </p>
+                        <p class="project-desc">
+                            Presented at the 2026 American Educational Research Association (AERA) Annual Meeting in a poster session.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-impact">
+                            <strong>Impact:</strong> Useful practical recommendations for designing and implementing robust longitdunal experiments in resource-limited contexts.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-top">
+                        <div class="project-header-icon">
+                            <div class="project-icon"><i class="fa-solid fa-brain"></i></div>
+                            <div class="project-links">
+                                <a href="https://factorflow-efa.streamlit.app/" target="_blank" title="Code Repository"><i class="fa-solid fa-code"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">FactorFlow: A Visual Analytics Workspace with Large Language Model-Assisted Interpretation for Factor Analysis</h3>
+                        <p class="project-desc">
+                            I developed an LLM-enhanced visual workbench for exploratory factor analysis with interactive model building and automated interpretation.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-impact">
+                            <strong>Impact:</strong> End-to-end workspace for exploratory factor analysis with comprehensive visualizations and automated interpretation.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-top">
+                        <div class="project-header-icon">
+                            <div class="project-icon"><i class="fa-solid fa-diagram-project"></i></div>
+                            <div class="project-links">
+                                <a href="https://justin-tuazy.shinyapps.io/match-app/" target="_blank" title="Code Repository"><i class="fa-solid fa-code"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Match App</h3>
+                        <p class="project-desc">
+                            I implemented Gower’s Distance and Binary Integer Linear Programming using R and created a web app for a student council initiative that involved optimally grouping students for theses.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-impact">
+                            <strong>Impact:</strong> Optimal and automated groupings, ensuring compatible work styles and research interests among students.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-top">
+                        <div class="project-header-icon">
+                            <div class="project-icon"><i class="fa-solid fa-chart-simple"></i></div>
+                            <div class="project-links">
+                                <a href="https://jptuazon.github.io/SinoTestSite/" target="_blank" title="Code Repository"><i class="fa-solid fa-file-pdf"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">Simulated Normality Test</h3>
+                        <p class="project-desc">
+                            For a course project in an undergraduate class, we explored an alternative test for normality. I also made an R package implementing the test. We leveraged Monte Carlo simulations to characterize the null distribution of the test statistic after establishing its ancillarity.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-impact">
+                            <strong>Impact:</strong> Exploration of alternative test for normality.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-top">
+                        <div class="project-header-icon">
+                            <div class="project-icon"><i class="fa-solid fa-gamepad"></i></div>
+                            <div class="project-links">
+                                <a href="https://simmer.io/@BurgerLover/trees" target="_blank" title="Code Repository"><i class="fa-solid fa-code"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="project-title">TREE$</h3>
+                        <p class="project-desc">
+                            I made a game for one of my courses during my first semester in college. The game was made using Unity, with C# as the programming language. The simple design assets were made using Microsoft PowerPoint while the background music was created using Chrome Music Lab - Song Maker.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="project-impact">
+                            <strong>Impact:</strong> Delivered core message of position paper creatively.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="section-header">
+                <span class="section-tag">// 03. Technical Capabilities</span>
+                <h2 class="section-title">Skills</h2>
+                <span style="color: var(--text-muted);">Experienced with core machine learning (e.g., supervised and unsupervised learning, classification and regression, recommender systems), statistical modeling (e.g., mixed-effects models, generalized linear models, factor models, uplift models), experimental design, hypothesis testing, computational statistics, and applied domains (e.g., computer vision, natural language processing).</span>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <h3 class="skill-group-title">
+                        <i class="fa-solid fa-square-root-variable"></i> Core Skills
+                    </h3>
+                    <div class="skills-items-container">
+                        <div class="skill-pill-card">Mathematics</div>
+                        <div class="skill-pill-card">Statistics</div>
+                        <div class="skill-pill-card">Computer Science</div>
+                        <div class="skill-pill-card">Data Science</div>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h3 class="skill-group-title">
+                        <i class="fa-solid fa-terminal"></i> Technical Languages
+                    </h3>
+                    <div class="skills-items-container">
+                        <div class="skill-pill-card">Python</div>
+                        <div class="skill-pill-card">R</div>
+                        <div class="skill-pill-card">SQL</div>
+                        <div class="skill-pill-card">VBA</div>
+                        <div class="skill-pill-card">Web Dev (HTML, CSS, JS, and PHP)</div>
+                        <div class="skill-pill-card">Game Dev (Unity C#)</div>
+                        <div class="skill-pill-card">Typesetting (LaTeX)</div>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h3 class="skill-group-title">
+                        <i class="fa-solid fa-layer-group"></i> Data Tools and Software
+                    </h3>
+                    <div class="skills-items-container">
+                        <div class="skill-pill-card">AWS SageMaker</div>
+                        <div class="skill-pill-card">Snowflake</div>
+                        <div class="skill-pill-card">Tableau</div>
+                        <div class="skill-pill-card">Power BI</div>
+                        <div class="skill-pill-card">Streamlit</div>
+                        <div class="skill-pill-card">Power Query</div>
+                        <div class="skill-pill-card">MSSQL Server</div>
+                        <div class="skill-pill-card">SharePoint</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards Section -->
+        <section id="awards">
+            <div class="section-header">
+                <span class="section-tag">// 04. Achievements & Honors</span>
+                <h2 class="section-title">Selected Awards</h2>
+            </div>
+
+            <div class="awards-scroll-container">
+                <div class="timeline">
+                    <!-- 2026 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2026</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-chalkboard-user"></i> Conference Oral Presentation</div>
+                                </div>
+                                <div class="award-issuer">2026 International Meeting of the Psychometric Society</div>
+                                <div class="award-desc">Co-authored a research paper, Pairwise Target Rotation for Factor Models, and presented it in an oral session.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2025 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2025</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-chalkboard-user"></i> Conference Poster Presentation</div>
+                                </div>
+                                <div class="award-issuer">2026 American Educational Research Association Annual Meeting</div>
+                                <div class="award-desc">Co-authored a research paper, Design and Implementation of Reduced Longitudinal Experiments, that was accepted for poster presentation.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2024 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2024</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> 1st Place Best Graduate Student Paper Award</div>
+                                </div>
+                                <div class="award-issuer">25th Student-Faculty Conference on Statistical Sciences</div>
+                                <div class="award-desc">
+                                    • Presented and won 1st place.
+                                    <br>
+                                    • Event organized by Philippine Statistics Authority.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2023 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2023</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> Summa Cum Laude</div>
+                                </div>
+                                <div class="award-issuer">University of the Philippines Diliman</div>
+                                <div class="award-desc">Graduated summa cum laude with the degree B.S. in Statistics.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2022 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2022</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-star"></i> Semifinalist</div>
+                                </div>
+                                <div class="award-issuer">Philippine Innovation Challenge 2022</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2019 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2019</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> NCR Regional Champion and National Finalist</div>
+                                </div>
+                                <div class="award-issuer">25th Philippine Statistics Quiz</div>
+                                <div class="award-desc">
+                                    Awarded by Philippine Statistics Authority.
+                                </div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-medal"></i> 2nd Place</div>
+                                </div>
+                                <div class="award-issuer">2019 ECONVERGENCE Economics Quiz Contest</div>
+                                <div class="award-desc">
+                                    Event organized by University of the Philippines Los Baños Economics Society.
+                                </div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-medal"></i> 2nd Place</div>
+                                </div>
+                                <div class="award-issuer">2019 Mapúa Malayan Colleges Mindanao Cup Math Quiz Show</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2018 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2018</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-certificate"></i> Certificate of Distinction</div>
+                                </div>
+                                <div class="award-issuer">2018 International Competitions and Assessments for Schools (Mathematics)</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> 1st Place</div>
+                                </div>
+                                <div class="award-issuer">2018 Mapúa Malayan Colleges Mindanao Cup Math Quiz Show</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-star"></i> Area Stage Qualifier</div>
+                                </div>
+                                <div class="award-issuer">21st Philippine Mathematical Olympiad</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> 1st Place</div>
+                                </div>
+                                <div class="award-issuer">5th Economic Leaders' Congress Quiz Bee</div>
+                                <div class="award-desc">
+                                    Event organized by De La Salle University - Manila.
+                                </div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> 1st Place</div>
+                                </div>
+                                <div class="award-issuer">5th Economic Leaders' Congress Policy Paper Competition</div>
+                                <div class="award-desc">
+                                    Event organized by De La Salle University - Manila.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2017 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2017</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-medal"></i> 2nd Place</div>
+                                </div>
+                                <div class="award-issuer">14th National Youth Congress Economics Quiz Bee</div>
+                                <div class="award-desc">
+                                    Event organized by University of the Philippines Economics Society and UP School of Economics Student Council.
+                                </div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-medal"></i> Bronze Medalist</div>
+                                </div>
+                                <div class="award-issuer">2017 International Teenagers' Mathematics Olympiad - National Parallel Cluster</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> Champion</div>
+                                </div>
+                                <div class="award-issuer">2nd Inter-High School Statistics Quiz Bowl</div>
+                                <div class="award-desc">
+                                    Event organized by Society of Math Majors - University of the Philippines Mindanao. 
+                                </div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-award"></i> Multi-Category Awardee</div>
+                                </div>
+                                <div class="award-issuer">2017 Metrobank-MTAP-DepEd Math Challenge</div>
+                                <div class="award-desc">
+                                    • Team Category: <strong>National Finalist</strong><br>
+                                    • Individual Elimination Round: <strong>1st Honors</strong>
+                                </div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-certificate"></i> Certificate of Distinction</div>
+                                </div>
+                                <div class="award-issuer">2017 Australian Mathematics Competition</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-trophy"></i> Champion</div>
+                                </div>
+                                <div class="award-issuer">2017 Math Mania</div>
+                                <div class="award-desc">
+                                    Event organized by the Society of Math Majors - University of the Philippines Mindanao. 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2016 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2016</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-star"></i> Area Stage Qualifier</div>
+                                </div>
+                                <div class="award-issuer">19th Philippine Mathematical Olympiad</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-certificate"></i> Certificate of Distinction</div>
+                                </div>
+                                <div class="award-issuer">2016 Australian Mathematics Competition</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-certificate"></i> Certificate of Distinction</div>
+                                </div>
+                                <div class="award-issuer">2016 International Competitions and Assessments for Schools (Mathematics)</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-award"></i> Multi-Category Awardee</div>
+                                </div>
+                                <div class="award-issuer">2016 Metrobank-MTAP-DepEd Math Challenge</div>
+                                <div class="award-desc">
+                                    • Division Finals: <strong>2nd Place</strong><br>
+                                    • Individual Elimination Round: <strong>2nd Honors</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2015 -->
+                    <div class="timeline-year-group">
+                        <div class="timeline-year-node">
+                            <span class="year-label">2015</span>
+                        </div>
+                        
+                        <div class="timeline-content-list">
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-certificate"></i> Distinction</div>
+                                </div>
+                                <div class="award-issuer">2015 Canadian Intermediate Mathematics Competition</div>
+                            </div>
+                            <div class="award-card">
+                                <div class="award-header">
+                                    <div class="award-title"><i class="fa-solid fa-award"></i> Multi-Category Awardee</div>
+                                </div>
+                                <div class="award-issuer">2015 Metrobank-MTAP-DepEd Math Challenge</div>
+                                <div class="award-desc">
+                                    • Division Finals: <strong>1st Place</strong><br>
+                                    • Individual Elimination Round: <strong>2nd Honors</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Engagements Section -->
+        <section id="engagements">
+            <div class="section-header">
+                <span class="section-tag">// 05. Engagements</span>
+                <h2 class="section-title">Other activities</h2>
+            </div>
+            
+            <div class="engagements-container">
+                <div class="engagements-header">
+                    <div class="eng-nav-group">
+                        <button class="carousel-nav-btn eng-prev" aria-label="Previous Engagement">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <span class="page-indicator eng-indicator">1 / 4</span>
+                        <button class="carousel-nav-btn eng-next" aria-label="Next Engagement">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="eng-viewport">
+                    <div class="eng-track">
+                        <div class="eng-card">
+                            <div class="eng-media">
+                                <img src="./imgs/ks.jpeg" alt="UB KS">
+                            </div>
+                            <div class="eng-info">
+                                <h3>Resource Speaker</h3>
+                                <div class="eng-meta">
+                                    <i class="fa-regular fa-calendar"></i> June 2026 | <i class="fa-solid fa-location-pin"></i> UnionBank Square
+                                </div>
+                                <p>
+                                    During the Data Science and Analytics Group Q2 Townhall at UnionBank of the Philippines, I gave a Knowledge Sharing session (i.e., lecture) on latent variable modeling (particularly, factor models). During the talk, I provided an introduction to factor analysis, including its mathematical background, its applications, and some recent developments in the field.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="eng-card">
+                            <div class="eng-media">
+                                <img src="./imgs/btc.png" alt="BTC">
+                            </div>
+                            <div class="eng-info">
+                                <h3>Chief Research Officer</h3>
+                                <div class="eng-meta">
+                                    <i class="fa-regular fa-calendar"></i> December 2025 — Present | <i class="fa-solid fa-school"></i> Beyond the Charts
+                                </div>
+                                <p>
+                                    I volunteer as the Chief Research Officer at Beyond the Charts, a team of passionate individuals who believe that numbers should speak to everyone. Our shared purpose is integrating statistics and medicine to advance health.
+                                    <br>
+                                    <br>
+                                    We aim to empower leaders, communities, and everyone by:
+                                    <br>
+                                    • Democratizing data
+                                    <br>
+                                    • Bridging knowledge gaps
+                                    <br>
+                                    • Advocating for accessibility of information to all
+                                    <br>
+                                    <br>
+                                    Learn more about us at https://www.facebook.com/beyondthecharts.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="eng-card">
+                            <div class="eng-media">
+                                <img src="./imgs/tys.png" alt="TYS">
+                            </div>
+                            <div class="eng-info">
+                                <h3>Keynote Speaker</h3>
+                                <div class="eng-meta">
+                                    <i class="fa-regular fa-calendar"></i> July 2025 | <i class="fa-solid fa-location-pin"></i> Virtual
+                                </div>
+                                <p>
+                                    I gave a talk to over 30 young students and aspiring Pisay scholars, sharing my journey from school to a career in STEM. I provided advice, answered questions, and hopefully inspired the next generation of Filipino innovators to embrace the challenges ahead.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="eng-card">
+                            <div class="eng-media">
+                                <img src="./imgs/pasig.jpeg" alt="PCSHS">
+                            </div>
+                            <div class="eng-info">
+                                <h3>Resource Speaker</h3>
+                                <div class="eng-meta">
+                                    <i class="fa-regular fa-calendar"></i> July 2024 | <i class="fa-solid fa-location-pin"></i> Virtual / Pasig City Science High School
+                                </div>
+                                <p>
+                                    I co-facilitated a research workshop for students and educators, collaborating with colleagues to instruct participants on the end-to-end research process, technical concepts, and quantitative methodologies.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="eng-card">
+                            <div class="eng-media">
+                                <video src="./vids/parangal.mp4" controls preload="metadata"></video>
+                            </div>
+                            <div class="eng-info">
+                                <h3>Guest Speaker</h3>
+                                <div class="eng-meta">
+                                    <i class="fa-regular fa-calendar"></i> February 2020 | <i class="fa-solid fa-location-pin"></i> University of the Philippines Diliman
+                                </div>
+                                <p>
+                                    In my freshman year, as the representative of students who participated and/or won in local/international competitions and/or conferences, I gave a short speech sharing my experience and encouraging my fellow students to strive for excellence during the University's recognition day.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" style="border-bottom: none;">
+            <div class="contact-box">
+                <h2>Let's Collaborate</h2>
+                <p>
+                    Interested in statistics, machine learning, and data science? Feel free to connect!
+                </p>
+                <div class="explicit-email">
+                    <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>jstuazon@alum.up.edu.ph
+                </div>
+                <div class="contact-socials">
+                    <a href="https://github.com/jptuazon" target="_blank" class="social-btn" title="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/justin-philip-tuazon/" target="_blank" class="social-btn" title="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <a href="mailto:jstuazon@alum.up.edu.ph" class="btn btn-primary">
+                    <i class="fa-solid fa-paper-plane"></i> Send a Message
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Justin Philip Tuazon.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Canvas Particle Background Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = Math.min(window.innerWidth / 15, 60);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 1.8 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 130)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Carousel Pagination Observer setup (Global Handler)
+        function setupCarouselPagination(viewportSelector, cardSelector, indicatorSelector, prevBtnSelector, nextBtnSelector) {
+            const viewport = document.querySelector(viewportSelector);
+            const cards = document.querySelectorAll(cardSelector);
+            const indicator = document.querySelector(indicatorSelector);
+            const prevBtn = document.querySelector(prevBtnSelector);
+            const nextBtn = document.querySelector(nextBtnSelector);
+            
+            if (!viewport || cards.length === 0 || !indicator) return;
+
+            const total = cards.length;
+
+            const updateIndicator = (index) => {
+                indicator.textContent = `${index} / ${total}`;
+                if (prevBtn) prevBtn.disabled = index === 1;
+                if (nextBtn) nextBtn.disabled = index === total;
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = Array.from(cards).indexOf(entry.target) + 1;
+                        updateIndicator(index);
+                    }
+                });
+            }, {
+                root: viewport,
+                threshold: 0.5 
+            });
+
+            cards.forEach(card => observer.observe(card));
+        }
+
+        // Initialize Carousel Page Indicators
+        setupCarouselPagination('.hl-viewport', '.highlight-card', '.hl-indicator', '.hl-prev', '.hl-next');
+        setupCarouselPagination('.eng-viewport', '.eng-card', '.eng-indicator', '.eng-prev', '.eng-next');
+
+        // Horizontal Carousel Buttons for Highlights
+        const hlViewport = document.querySelector('.hl-viewport');
+        const hlPrevBtn = document.querySelector('.hl-prev');
+        const hlNextBtn = document.querySelector('.hl-next');
+
+        if (hlViewport && hlPrevBtn && hlNextBtn) {
+            hlPrevBtn.addEventListener('click', () => {
+                hlViewport.scrollBy({ left: -hlViewport.clientWidth, behavior: 'smooth' });
+            });
+            hlNextBtn.addEventListener('click', () => {
+                hlViewport.scrollBy({ left: hlViewport.clientWidth, behavior: 'smooth' });
+            });
+        }
+
+        // Horizontal Carousel Buttons for Engagements
+        const engViewport = document.querySelector('.eng-viewport');
+        const engPrevBtn = document.querySelector('.eng-prev');
+        const engNextBtn = document.querySelector('.eng-next');
+
+        if (engViewport && engPrevBtn && engNextBtn) {
+            engPrevBtn.addEventListener('click', () => {
+                engViewport.scrollBy({ left: -engViewport.clientWidth, behavior: 'smooth' });
+            });
+            engNextBtn.addEventListener('click', () => {
+                engViewport.scrollBy({ left: engViewport.clientWidth, behavior: 'smooth' });
+            });
+        }
+
+        // History Pagination Logic
+        document.querySelectorAll('.pagination-wrapper').forEach(wrapper => {
+            const list = wrapper.querySelector('.history-list');
+            const cards = Array.from(list.querySelectorAll('.history-card'));
+            const prevBtn = wrapper.querySelector('.prev-btn');
+            const nextBtn = wrapper.querySelector('.next-btn');
+            const indicator = wrapper.querySelector('.page-indicator');
+            
+            const itemsPerPage = 3;
+            let currentPage = 1;
+            const totalPages = Math.ceil(cards.length / itemsPerPage) || 1;
+
+            function renderPage() {
+                cards.forEach((card, index) => {
+                    if (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                if (indicator) {
+                    indicator.textContent = `${currentPage} / ${totalPages}`;
+                }
+                
+                if (prevBtn) prevBtn.disabled = currentPage === 1;
+                if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderPage();
+                    }
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderPage();
+                    }
+                });
+            }
+
+            // Initial render
+            renderPage();
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+            });
+        });
+
+        // Active Navigation Scrollspy
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
