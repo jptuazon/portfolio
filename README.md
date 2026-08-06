@@ -1,1 +1,1 @@
-Repository for my (Justin Philip Tuazon) online portfolio.
+Repository for Justin Philip Tuazon's online portfolio.
