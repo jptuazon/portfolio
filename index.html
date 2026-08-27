@@ -1175,10 +1175,13 @@
 
         .social-btn:hover {
             background: var(--accent-blue);
-            color: var(--accent-cyan);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
             border-color: transparent;
+        }
+
+        body.light-mode .social-btn:hover {
+            color: var(--accent-cyan);
         }
 
         footer {
